@@ -1,0 +1,19 @@
+version: '2.1'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: mkpoll
+      POSTGRES_PASSWORD: mkpollpass
+    volumes:
+      - .docker-data/postgresql-data:/var/lib/postgresql/data
+  be:
+    image: pypy:3
+    volumes:
+      - .:/mkpoll
+    working_dir: /mkpoll
+    ports:
+      - "8000:8000"
+    stdin_open: true
+    tty: true
+    command: bash /mkpoll/be_entrypoint.sh
